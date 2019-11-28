@@ -46,22 +46,28 @@
     <!-- BUS COMPONENT HERE!! -->
 
     <BusList v-bind:buses="buses"/>
+    <Modal v-bind:bus="busInModal" v-bind:show="showModal" @close="showModal = false" />
 
   </b-card>
 </template>
 
 <script>
 import BusList from '../components/BusList.vue';
+import Modal from '../components/Modal.vue';
+import { EventBus } from '../main';
 
 export default {
   components:{
-    BusList
+    BusList,
+    Modal
   },
   data() {
     return {
       from: "",
       to: "",
       depart: "",
+      showModal: false,
+      busInModal: { busRoute:{} },
       buses: [
         {
           busId: 1,
@@ -80,8 +86,8 @@ export default {
           availableSeats:56
         },
         {
-          busId: 1,
-          name: "Sunrays",
+          busId: 2,
+          name: "Ceres",
           image: "http://via.placeholder.com/150x100",
           plateNumber: "55778",
           busType: "Regular",
@@ -90,13 +96,13 @@ export default {
           arrivalTime:"07:30 PM",
           departureDate: "November 10, 2019",
           busRoute: {
-            from: "Santander",
+            from: "Naga",
             to: "Liloan Port"
           },
           availableSeats:36
         },
         {
-          busId: 1,
+          busId: 3,
           name: "Sunrays",
           image: "http://via.placeholder.com/150x100",
           plateNumber: "99667",
@@ -106,13 +112,24 @@ export default {
           arrivalTime:"07:30 PM",
           departureDate: "November 10, 2019",
           busRoute: {
-            from: "Santander",
+            from: "Carcar",
             to: "Liloan Port"
           },
           availableSeats:41
         }
       ]
     };
+  },
+  methods: {
+    getTicket() {
+      console.log("getTicket")
+    }
+  },
+   mounted(){
+         EventBus.$on('displayBusDataOnModal',(data)=>{
+             this.busInModal = data;
+             this.showModal = true;
+         })
   }
 };
 </script>
