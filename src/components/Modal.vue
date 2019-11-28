@@ -9,6 +9,8 @@
                            <h2> {{ bus.company }} </h2>
                         </slot>
                     </div>
+                    <br/>
+                    <b-img id="image" thumbnail fluid :src="bus.image" alt="Image 1"></b-img>
 
                     <div class="modal-body">
                         <slot name="body">
