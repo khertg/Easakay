@@ -1,9 +1,6 @@
 <template>
     <div>
         <h3>Bus Crud</h3>
-
-        <BusModal v-bind:showMode="showMode" v-bind:show="show" v-bind:modalLabel="modalLabel" @close="show = false"/>
-
         <div>
             <b-button variant="primary" v-b-modal.addbus-modal-tall >Add Bus</b-button>
             <AddBusModal/>

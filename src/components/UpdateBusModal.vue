@@ -1,23 +1,47 @@
 <template>
     <b-modal id="updatebus-modal-tall" title="Update Bus" @ok="updateBus">
-        <h6>Bus Main Details</h6>
-        <span>Name:</span> <input name="name" v-model="name" > <br>
-        <span>Image:</span> <input name="image" type="file" @change="uploadImage($event)"> <br>
-        <span>Icon Image:</span> <input name="image1" type="file" @change="uploadIconImage($event)"> <br>
-        <span>PlateNumber:</span> <input name="platenumber" v-model="plateNumber" > <br>
-        <span>BusType:</span> <input name="busttype" v-model="busType"> <br>
-        <span>Company:</span> <input name="company" v-model="company"> <br>
-        <span>DepartureTime:</span> <input name="departuretime" v-model="departureTime"> <br>
-        <span>ArrivalTime:</span> <input name="arrivaltime" v-model="arrivalTime"> <br>
-        <span>DepartureDate:</span> <input name="departuredate" v-model="departureDate"> <br>
-        <span>Fare:</span> <input name="fare" v-model="fare"> <br>
-        <span>AvailableSeats:</span> <input name="availableseats" type="number" v-model="availableSeats"> <br>
-        <hr/>
-
-        <h6>Bus Route</h6>
-        <span>From:</span> <input name="from" v-model="from"> <br>
-        <span>To:</span> <input name="to" v-model="to"> <br>
-        <span>Address:</span> <input name="address" v-model="address"> <br>
+        <b-form-group label="Name: ">
+            <b-form-input v-model="name" type="text" name="name" placeholder="Enter name"></b-form-input>
+        </b-form-group>
+        <b-form-group label="Image:" label-for="file-default">
+            <b-form-file name="imageData" v-model="imageData"></b-form-file>
+        </b-form-group>
+        <b-form-group label="Image Icon:" label-for="file-default">
+            <b-form-file name="imageIconData" v-model="imageIconData"></b-form-file>
+        </b-form-group>
+        <b-form-group label="Plate Number: ">
+            <b-form-input v-model="plateNumber" name="plateNumber" type="text" placeholder="Enter plate number"></b-form-input>
+        </b-form-group>
+        <b-form-group label="Bus Type: ">
+            <b-form-input v-model="busType" name="busType" type="text" placeholder="Enter bus type"></b-form-input>
+        </b-form-group>
+        <b-form-group label="Company: ">
+            <b-form-input v-model="company" name="company" type="text" placeholder="Enter company"></b-form-input>
+        </b-form-group>
+         <b-form-group label="Departure Time: ">
+            <b-form-input v-model="departureTime" name="departureTime" type="text" placeholder="Enter departure time"></b-form-input>
+        </b-form-group>
+         <b-form-group label="Arrival Time: ">
+            <b-form-input v-model="arrivalTime" name="arrivalTime" type="text" placeholder="Enter arrival time"></b-form-input>
+        </b-form-group>
+         <b-form-group label="Departure Date: ">
+            <b-form-input v-model="departureDate" name="departureDate" type="date" placeholder="Enter departure date"></b-form-input>
+        </b-form-group>
+         <b-form-group label="Fare: ">
+            <b-form-input v-model="fare" name="fare" type="text" placeholder="Enter fare"></b-form-input>
+        </b-form-group>
+         <b-form-group label="Available Seats: ">
+            <b-form-input v-model="availableSeats" name="availableSeats" type="text" placeholder="Enter available seats"></b-form-input>
+        </b-form-group>
+         <b-form-group label="From: ">
+            <b-form-input v-model="from" name="from" type="text" placeholder="Enter from"></b-form-input>
+        </b-form-group>
+         <b-form-group label="To: ">
+            <b-form-input v-model="to" name="to" type="text" placeholder="Enter to"></b-form-input>
+        </b-form-group>
+         <b-form-group label="Address: ">
+            <b-form-input v-model="address" name="address" type="text" placeholder="Enter address"></b-form-input>
+        </b-form-group>
 
         <template v-slot:modal-footer="{ cancel, ok }">
             <b-button size="sm" variant="success" @click="ok()">
