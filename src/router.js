@@ -6,6 +6,7 @@ import Dashboard from './modules/Dashboard.vue'
 import LandingPage from './modules/LandingPage.vue'
 import Login from './modules/Login.vue'
 import Register from './modules/Register.vue'
+import BusCRUD from './modules/BusCRUD.vue'
 import HelloWorld from './components/HelloWorld.vue'
 
 Vue.use(Router)
@@ -47,6 +48,11 @@ let router = new Router({
       name: 'dashboard',
       component: Dashboard,
       beforeEnter: auth
+    },
+    {
+      path: '/buscrud',
+      name: 'buscrud',
+      component: BusCRUD
     }
   ]
 })
