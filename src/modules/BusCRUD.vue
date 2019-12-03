@@ -1,48 +1,42 @@
 <template>
     <div>
-        <h3>Bus Crud</h3>
-        <div>
-            <b-button variant="primary" v-b-modal.addbus-modal-tall >Add Bus</b-button>
-            <AddBusModal/>
-            <UpdateBusModal/>
+        <div class="container h-100" style="margin-top:60px;">
+            <div class="row h-100 justify-content-center align-items-center">
+                <b-card header-tag="header" footer-tag="footer" style="width:80rem;">
+                    <template v-slot:header>
+                        <h6 class="mb-0">BUS CRUD
+                            <b-button variant="primary" size="sm" class="float-right" v-b-modal.addbus-modal-tall >Add Bus</b-button>
+                        </h6>
+                    </template>
+                    <b-table small :fields="fields" :items="buses" responsive="sm" class="mt-3" outlined>
+                        <template v-slot:cell(image)="data">
+                            <img :src="data.item.image" alt="" width="50" height="50">
+                        </template>
+
+                        <template v-slot:cell(name)="data">
+                            {{ data.item.name }}
+                        </template>
+
+                        <template v-slot:cell(busType)="data">
+                            <b class="text-info">{{ data.item.busType.toUpperCase() }}</b>
+                        </template>
+
+                        <template v-slot:cell(actions)="data">
+                            <div class="table-button-container">
+                                <b-button variant="danger" size="sm" @click.prevent="deleteBus(data.item.bus_id)">DELETE</b-button> &nbsp;
+                                <b-button v-b-modal.updatebus-modal-tall size="sm" @click="instanciateDataForUpdate(data.item)">UPDATE</b-button>
+                            </div>
+                        </template>  
+                    </b-table>
+                    <template v-slot:footer>
+                        <em>Copyrights reserved &#9400;2019</em>
+                    </template>
+                </b-card>
+            </div>  
         </div>
 
-        <div v-bind:key="bus.bus_id" v-for="bus in buses">
-            <div>
-                 <b-row>
-                    <div class="col-sm-2">
-                    <br />
-                    <b-img id="image" thumbnail fluid v-bind:src="bus.image" alt="Image 1"></b-img>
-
-                    <p>{{ bus.name }} {{ bus.plateNumber }} . {{ bus.busType }}</p>
-                    </div>
-                    <div class="col-sm-3">
-                    <h5 class="text-center">{{ bus.company }}</h5>
-                    <hr />
-
-                    <p>
-                        Departure Time: {{ bus.departureTime }}
-                        <br />Arrival Time: {{ bus.arrivalTime }}
-                        <br />Date: {{ bus.departureDate }}
-                    </p>
-                    </div>
-                    <div class="col-sm-5">
-                    <h5 class="text-center">{{ bus.busRoute.from }} - {{ bus.busRoute.to }}</h5>
-                    <hr />
-                    </div>
-                    <div class="col-sm-2">
-                    <h5 class="text-center">{{ bus.availableSeats }} Seats</h5>
-                    <hr />
-
-                    <b-form >
-                        <b-button variant="danger" @click.prevent="deleteBus(bus.bus_id)">DELETE</b-button> &nbsp;
-                        <b-button v-b-modal.updatebus-modal-tall @click="instanciateDataForUpdate(bus)">UPDATE</b-button>
-                    </b-form>
-                    </div>
-                </b-row>
-                
-            </div>
-        </div>
+        <AddBusModal/>
+        <UpdateBusModal/>
         
     </div>
 </template>
@@ -64,6 +58,16 @@ export default {
     name:"BusCRUD",
     data(){
         return {
+            fields: [
+                 { key: 'image', label: 'Image'},
+                 { key: 'name', label: 'Name'},
+                 { key: 'plateNumber', label: 'Plate Number'},
+                 { key: 'busType', label: 'Bus Type'},
+                 ,'company'
+                 ,'fare'
+                 ,'availableSeats'
+                 ,'actions'
+            ],
             buses : [],
             show : false,
             showMode : '',
