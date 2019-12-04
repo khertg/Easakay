@@ -65,7 +65,9 @@ export default {
       let username = this.username 
       let password = this.password
       this.$store.dispatch('loginAsync', { username, password })
-        .then(() => this.$router.push('/dashboard'))
+        .then(() =>{ 
+          this.$router.push('/buscrud')
+        })
         .catch(err => console.log(err))
     }
   }

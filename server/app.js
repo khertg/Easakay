@@ -11,6 +11,10 @@ const jwt = require('jsonwebtoken')
 const multer = require('multer');
 const path = require('path');
 
+const http = require('http').Server(app)
+const io = require('socket.io')(http)
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors())
@@ -211,12 +215,24 @@ function convertToBusJson(data, isAdd = true){
     return bus;
 }
 
+io.on("connection", socket => {
 
+    socket.on("notification", data => {
+        console.log("Browser send notification from: " + data.username);
+        //SENDING NOTIFICATION BACK TO BROWSER
+        socket.emit('channel.' + data.username,{ message: "This message is from server." });
+    });
 
-app.listen(port, (err) => {
-    if (err) {
-        console.log(err)
-    } else {
-        console.log('connected '+ port)
-    }
+});
+
+// app.listen(port, (err) => {
+//     if (err) {
+//         console.log(err)
+//     } else {
+//         console.log('connected '+ port)
+//     }
+// })
+
+http.listen(port, () => {
+    console.log('Listening on *:'+port)
 })

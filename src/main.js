@@ -13,6 +13,10 @@ import Vuelidate from "vuelidate"
 import VueSidebarMenu from 'vue-sidebar-menu'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 import { CardPlugin } from 'bootstrap-vue'
+
+import * as io from 'socket.io-client'
+import VueSocketIO from 'vue-socket.io'
+
 Vue.use(CardPlugin)
 Vue.use(Vuelidate)
 
@@ -23,18 +27,17 @@ Vue.config.productionTip = false
 Vue.use(VueSidebarMenu)
 Vue.use(BootstrapVue)
 
-// new Vue({
-//   render: h => h(App),
-//   router: router,
-//   template: '<router-view></router-view>'
-// }).$mount('#app')
-
-// new Vue({
-//   el: '#app',
-//   // router,
-//   components: { App },
-//   template: '<App/>'
-// })
+Vue.use(new VueSocketIO({
+    debug: true,
+    // connection: io('http://localhost:8082'), //options object is Optional
+    connection: 'http://localhost:8082', //options object is Optional
+    vuex: {
+      store,
+      actionPrefix: "SOCKET_",
+      mutationPrefix: "SOCKET_"
+    }
+  })
+);
 
 export const EventBus = new Vue()
 
