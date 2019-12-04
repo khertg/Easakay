@@ -6,6 +6,7 @@
                     <template v-slot:header>
                         <h6 class="mb-0">BUS CRUD
                             <b-button variant="primary" size="sm" class="float-right" v-b-modal.addbus-modal-tall >Add Bus</b-button>
+                            <b-button variant="success" style="margin-right:0.5rem;" size="sm" class="float-right" @click="notify()" >Notify</b-button>
                         </h6>
                     </template>
                     <b-table small :fields="fields" :items="buses" responsive="sm" class="mt-3" outlined>
@@ -74,9 +75,18 @@ export default {
             modalLabel : '',
             bus : null
         }
-    }, 
+    },
+    sockets: {
+        connect: function () {
+            console.log('socket connected')
+        }
+    },
     methods: {
-        deleteBus(bus_id){
+        //This function will send username to the server.
+        notify(){
+            this.$socket.emit("notification", { username: localStorage.getItem("username") });
+        }
+        ,deleteBus(bus_id){
             this.$bvModal.msgBoxConfirm('Are you sure you want to delete this bus?.', {
                 title: 'Please Confirm',
                 size: 'sm',
@@ -197,11 +207,16 @@ export default {
                     alert("Error deleting Bus!")
                 })
         })
-
-
-
     },
+
     created(){
+
+        const channelName = 'channel.'+ localStorage.getItem('username');
+        this.sockets.subscribe(channelName, (data) => {
+        //  this.sockets.subscribe('channel.'+ localStorage.getItem('username'), (data) => {
+            alert(data.message);
+        });
+
          axios.get(url)
             .then((resp)=>{
                 console.log(resp);

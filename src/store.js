@@ -8,13 +8,13 @@ export default new Vuex.Store({
 	state: {
   		status: '',
   		token: localStorage.getItem('jwt') || '',
-  		user : {}
+	    user : {}
 	},
 	mutations: {
 		auth_request(state){
 			state.status = 'loading'
 	  	},
-	  	auth_success(state, token, user){
+	  	auth_success(state, { token, user }){
 			state.status = 'success'
 			state.token = token
 			state.user = user
@@ -35,12 +35,14 @@ export default new Vuex.Store({
 				.then(resp => {
 					const token = resp.data.token
 					const user = resp.data.user
-					console.log(resp)
+
 					if(token){
 						localStorage.setItem('jwt', token)
+						localStorage.setItem('username', user.username)
 					}
+
 					axios.defaults.headers.common['Authorization'] = token
-					commit('auth_success', token, user)
+					commit('auth_success', { token, user })
 					resolve(resp)
 				})
 				.catch(err => {
